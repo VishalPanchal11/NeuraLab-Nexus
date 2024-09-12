@@ -40,33 +40,33 @@ export const navigation = [
   {
     id: "0",
     title: "Home",
-    url: "#home",
+    url: "/home",
   },
   {
     id: "1",
     title: "Courses",
-    url: "#courses",
+    url: "/courses",
   },
   {
     id: "2",
     title: "CodeLab",
-    url: "#codelab",
+    url: "/codelab",
   },
   {
     id: "3",
     title: "ChatRoom",
-    url: "#chatroom",
+    url: "/chatroom",
   },
   {
     id: "4",
     title: "New account",
-    url: "#signup",
+    url: "/auth",
     onlyMobile: true,
   },
   {
     id: "5",
     title: "Sign in",
-    url: "#login",
+    url: "/auth",
     onlyMobile: true,
   },
 ];

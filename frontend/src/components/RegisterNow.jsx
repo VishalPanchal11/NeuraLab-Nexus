@@ -30,7 +30,7 @@ const Register = () => {
               </li>
             ))}
           </ul>
-          <Button className={`lg:ml-12 md:ml-6 sm:ml-3`} href="#pricing">Try it now</Button>
+          <Button className={`lg:ml-12 md:ml-6 sm:ml-3`} href="/auth">Try it now</Button>
         </div>
         <div className="lg:ml-auto xl:w-[32rem] lg:mt-4 mt-8">
           <p className="sm:ml-[10rem] md:ml-[12.5rem] lg:ml-auto body-2  text-n-4  md:mb-[3.3rem] lg:mb-[5.65rem] max-w-[24rem] lg:mx-auto text-justify">
@@ -53,7 +53,7 @@ const Register = () => {
               {collabApps.map((app, index) => (
                 <li
                   key={app.id}
-                  className={`absolute top-0 left-1/2 h-1/2 -ml-[1.6rem] origin-bottom rotate-${
+                  className={`absolute cursor-pointer top-0 left-1/2 h-1/2 -ml-[1.6rem] origin-bottom rotate-${
                     index * 45
                   }`}
                 >

@@ -37,7 +37,7 @@ const Hero = () => {
           <p className="body-1 max-w-3xl mx-auto mb-6 text-n-2 lg:mb-8">
              Upgrade your productivity with NeuraLab Nexus, the All-in-One workspace.
           </p>
-          <Button href="/pricing" white>
+          <Button href="/auth" white>
             Get Started
           </Button>
         </div>
@@ -56,14 +56,14 @@ const Hero = () => {
                 <ScrollParallax isAbsolutelyPositioned>
                   <ul className="hidden absolute -left-[5.5rem] bottom-[7.5rem] px-1 py-1 bg-n-9/40 backdrop-blur border border-n-1/10 rounded-2xl xl:flex ">
                     {heroIcons.map((icon, index) => (
-                      <a className="p-5 cursor-pointer" key={index} href={navigation[index].url}>
+                      <a className="p-5 z-10 cursor-pointer" key={index} href={navigation[index].url}>
                         <img src={icon} width={24} height={25} alt={navigation[index].title} />
                       </a>
                     ))}
                   </ul>
                 </ScrollParallax>
                 <ScrollParallax isAbsolutelyPositioned>
-                  <a className="cursor-pointer" >
+                  <a className="cursor-pointer" href="/chatroom" >
                     <Notification
                       className="hidden absolute -right-[5.5rem] bottom-[11rem] w-[18rem] xl:flex "
                       title="ChatRoom"
