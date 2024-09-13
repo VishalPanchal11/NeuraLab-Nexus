@@ -5,15 +5,39 @@ import Victory from "../../assets/victory.svg";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { apiClient } from "@/lib/api-client";
+import { SIGNUP_ROUTE } from "@/utils/constants";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const validateSignup = () => {
+    if (!email.length) {
+      toast.error("Email is required.");
+      return false;
+    }
+    if (!password.length) {
+      toast.error("Password is required.");
+      return false;
+    }
+    if (!password.length) {
+      toast.error("Password and confirm password should be same.");
+      return false;
+    }
+    return true;
+  };
+
   const handleLogin = async () => {};
 
-  const handleSignup = async () => {};
+  const handleSignup = async () => {
+    if (validateSignup()) {
+      const response = await apiClient.post("http://localhost:6969/api/auth/signup", { email, password });
+      console.log({ response });
+    }
+  };
 
   return (
     <div className="h-[100vh] w-[100vw] flex items-center justify-center ">
@@ -59,7 +83,10 @@ const Auth = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <Button className="rounded-full pl-6 pr-6 pt-4 pb-4" onClick={handleLogin}>
+                <Button
+                  className="rounded-full pl-6 pr-6 pt-4 pb-4"
+                  onClick={handleLogin}
+                >
                   Login
                 </Button>
                 <Input className="invisible" />
@@ -86,7 +113,10 @@ const Auth = () => {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
-                <Button className="rounded-full pl-6 pr-6 pt-4 pb-4" onClick={handleSignup}>
+                <Button
+                  className="rounded-full pl-6 pr-6 pt-4 pb-4"
+                  onClick={handleSignup}
+                >
                   Signup
                 </Button>
               </TabsContent>
