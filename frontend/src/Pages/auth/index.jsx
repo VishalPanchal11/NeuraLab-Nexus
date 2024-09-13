@@ -7,12 +7,26 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { apiClient } from "@/lib/api-client";
-import { SIGNUP_ROUTE } from "@/utils/constants";
+import { LOGIN_ROUTE, SIGNUP_ROUTE } from "@/utils/constants";
+import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const validateLogin = () => {
+    if (!email.length) {
+      toast.error("Email is required.");
+      return false;
+    }
+    if (!password.length) {
+      toast.error("Password is required.");
+      return false;
+    }
+    return true;
+  };
 
   const validateSignup = () => {
     if (!email.length) {
@@ -30,11 +44,27 @@ const Auth = () => {
     return true;
   };
 
-  const handleLogin = async () => {};
+  const handleLogin = async () => {
+    if (validateLogin()) {
+      const response = await apiClient.post(
+        LOGIN_ROUTE,
+        { email, password },
+        { withCredentials: true }
+      );
+      if (response.data.user.profileSetup) navigate("/chat");
+      else navigate("/profile");
+      console.log({ response });
+    }
+  };
 
   const handleSignup = async () => {
     if (validateSignup()) {
-      const response = await apiClient.post("http://localhost:6969/api/auth/signup", { email, password });
+      const response = await apiClient.post(
+        SIGNUP_ROUTE,
+        { email, password },
+        { withCredentials: true }
+      );
+      if (response.status === 201) navigate("/profile");
       console.log({ response });
     }
   };
