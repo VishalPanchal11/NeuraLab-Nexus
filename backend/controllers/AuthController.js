@@ -1,6 +1,6 @@
 import User from "../models/UserModel.js";
 import jwt from "jsonwebtoken";
-import bcrypt from 'bcrypt';
+import bcrypt from "bcrypt";
 
 const maxAge = 30 * 24 * 60 * 60 * 1000;
 
@@ -13,13 +13,13 @@ const createToken = (email, userId) => {
 export const signup = async (request, response, next) => {
   try {
     const { email, password } = request.body;
-    if (!email && !password) {
+    if (!email || !password) {
       return response.status(400).send("Email and Password is required.");
     }
     const user = await User.create({ email, password });
     response.cookie("jwt", createToken(email, user.id), {
       maxAge,
-      secure: true,
+      secure: false,
       sameSite: "None",
     });
     return response.status(201).json({
@@ -38,7 +38,7 @@ export const signup = async (request, response, next) => {
 export const login = async (request, response, next) => {
   try {
     const { email, password } = request.body;
-    if (!email && !password) {
+    if (!email || !password) {
       return response.status(400).send("Email and Password is required.");
     }
     const user = await User.findOne({ email });
@@ -51,7 +51,7 @@ export const login = async (request, response, next) => {
     }
     response.cookie("jwt", createToken(email, user.id), {
       maxAge,
-      secure: true,
+      secure: false,
       sameSite: "None",
     });
     return response.status(200).json({
@@ -64,6 +64,27 @@ export const login = async (request, response, next) => {
         color: user.color,
         profileSetup: user.profileSetup,
       },
+    });
+  } catch (error) {
+    console.log({ error });
+    return response.status(500).send("Internal Server Error");
+  }
+};
+
+export const getUserInfo = async (request, response, next) => {
+  try {
+    const userData = await User.findById(request.userId);
+    if (!userData) {
+      return response.status(404).send("User with the given D is not found.");
+    }
+    return response.status(200).json({
+        id: userData.id,
+        email: userData.email,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        image: userData.image,
+        color: userData.color,
+        profileSetup: userData.profileSetup,
     });
   } catch (error) {
     console.log({ error });
