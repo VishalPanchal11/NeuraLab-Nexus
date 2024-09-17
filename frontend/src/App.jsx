@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home";
 import Courses from "./Pages/Courses";
 import Auth from "./Pages/auth";
-import Chat from "./Pages/Chat";
+import ChatRoom from "./Pages/Chat";
 import Profile from "./Pages/Profile/index.jsx";
 import { useAppStore } from "./store";
 import { useEffect, useState } from "react";
@@ -80,7 +80,7 @@ const App = () => {
           path="/chatroom"
           element={
             <PrivateRoute>
-              <Chat />
+              <ChatRoom />
             </PrivateRoute>
           }
         />

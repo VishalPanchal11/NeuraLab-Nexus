@@ -7,6 +7,6 @@ import { Toaster } from "./components/ui/sonner";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <>
     <App/>
-    <Toaster closeButton/>
+    <Toaster />
   </>
 );

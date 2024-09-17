@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-const Chat = () => {
+const ChatRoom = () => {
   const { userInfo } = useAppStore();
   const navigate = useNavigate();
   useEffect(() => {
@@ -16,4 +16,4 @@ const Chat = () => {
   return <div>Chat</div>;
 };
 
-export default Chat;
+export default ChatRoom;
