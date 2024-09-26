@@ -1,18 +1,18 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Home from "./Pages/Home";
-import Courses from "./Pages/Courses";
-import Auth from "./Pages/auth";
-import ChatRoom from "./Pages/Chat";
+import Home from "./Pages/Home.jsx";
+import Courses from "./Pages/Courses.jsx";
+import Auth from "./Pages/auth/index.jsx";
+import ChatRoom from "./Pages/Chat/index.jsx";
 import Profile from "./Pages/Profile/index.jsx";
 import { useAppStore } from "./store";
 import { useEffect, useState } from "react";
-import { apiClient } from "./lib/api-client";
-import { GET_USER_INFO } from "./utils/constants";
+import { apiClient } from "./lib/api-client.js";
+import { GET_USER_INFO } from "./utils/constants.js";
 
 const PrivateRoute = ({ children }) => {
   const { userInfo } = useAppStore();
   const isAuthenticated = !!userInfo;
-  return isAuthenticated ? children : <Navigate to="/home" />;
+  return isAuthenticated ? children : <Navigate to="/auth" />;
 };
 
 const AuthRoute = ({ children }) => {

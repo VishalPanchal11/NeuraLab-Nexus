@@ -4,6 +4,8 @@ import cors from "cors";
 import mongoose from "mongoose";
 import authRoutes from "./routes/AuthRoutes.js";
 import cookieParser from "cookie-parser";
+import contactsRoutes from "./routes/ContactRoutes.js";
+import setupSocket from "./socket.js";
 
 dotenv.config();
 
@@ -21,14 +23,19 @@ app.use(
 
 app.options("*", cors());
 
+app.use("/uploads/profiles", express.static("uploads/profiles"));
+
 app.use(cookieParser());
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/contacts", contactsRoutes);
 
 const server = app.listen(port, () =>
   console.log(`Server is running at https://localhost:${port}`)
 );
+
+setupSocket(server);
 
 mongoose
   .connect(databaseURL)
