@@ -6,9 +6,13 @@ import { renameSync, unlinkSync } from "fs";
 const maxAge = 30 * 24 * 60 * 60 * 1000;
 
 const createToken = (email, userId) => {
-  return jwt.sign({ email, userId }, process.env.JWT_KEY, {
-    expiresIn: maxAge,
-  });
+  return jwt.sign(
+    { email, userId },
+    "HGFY%#%$@%EDYTE&^$&^PUP_)(YUT&^%&^%#%$STR(P(^*T_()UPHOY%YFUR%E%DEY%WRS)",
+    {
+      expiresIn: maxAge,
+    }
+  );
 };
 
 export const signup = async (request, response, next) => {
@@ -20,7 +24,7 @@ export const signup = async (request, response, next) => {
     const user = await User.create({ email, password });
     response.cookie("jwt", createToken(email, user.id), {
       maxAge,
-      secure: false,
+      secure: true,
       sameSite: "None",
     });
     return response.status(201).json({
@@ -52,7 +56,7 @@ export const login = async (request, response, next) => {
     }
     response.cookie("jwt", createToken(email, user.id), {
       maxAge,
-      secure: false,
+      secure: true,
       sameSite: "None",
     });
     return response.status(200).json({
@@ -76,7 +80,7 @@ export const getUserInfo = async (request, response, next) => {
   try {
     const userData = await User.findById(request.userId);
     if (!userData) {
-      return response.status(404).send("User with the given D is not found.");
+      return response.status(404).send("User with the given ID is not found.");
     }
     return response.status(200).json({
       id: userData.id,
@@ -170,7 +174,7 @@ export const removeProfileImage = async (request, response, next) => {
 
 export const logout = async (request, response, next) => {
   try {
-    response.cookie("jwt","",{maxAge:1,secure:true,sameSite:"None"})
+    response.cookie("jwt", "", { maxAge: 1, secure: true, sameSite: "None" });
     return response.status(200).send("Logout successfull.");
   } catch (error) {
     console.log({ error });

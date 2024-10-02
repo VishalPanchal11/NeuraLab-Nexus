@@ -39,6 +39,7 @@ const App = () => {
         console.log({ response });
       } catch (error) {
         setUserInfo(undefined);
+        console.error("Error fetching user data:", error); // Log the error for debugging
       } finally {
         setLoading(false);
       }
