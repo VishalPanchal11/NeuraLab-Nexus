@@ -77,6 +77,7 @@ const App = () => {
             </PrivateRoute>
           }
         />
+        
         <Route
           path="/chatroom"
           element={
@@ -85,6 +86,7 @@ const App = () => {
             </PrivateRoute>
           }
         />
+       
         <Route
           path="/profile"
           element={
@@ -93,7 +95,7 @@ const App = () => {
             </PrivateRoute>
           }
         />
-        {/* <Route path="/codelab" element={<CodeLab/>} /> */}
+        
       </Routes>
     </BrowserRouter>
   );

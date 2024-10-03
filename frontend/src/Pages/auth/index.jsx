@@ -1,5 +1,4 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Background from "../../assets/login2.png";
 import { neuraLabNexus } from "@/assets";
 import Victory from "../../assets/victory.svg";
 import { Input } from "@/components/ui/input";

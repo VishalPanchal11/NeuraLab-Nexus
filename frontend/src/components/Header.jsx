@@ -1,14 +1,17 @@
 import { useLocation } from "react-router-dom";
-import { neuraLabNexus } from "../assets/index";
 import { navigation } from "../constants";
 import Button from "./Button";
 import MenuSvg from "../assets/svg/MenuSvg";
 import { HamburgerMenu } from "./design/Header";
 import { useState } from "react";
-import { enablePageScroll } from "scroll-lock";
+import { enablePageScroll, disablePageScroll } from "scroll-lock";
 import Logo from "./Logo";
+import { useAppStore } from "@/store";
+import ProfileInfo from "@/Pages/Chat/components/contacts-container/components/profile-info";
 
 const Header = () => {
+  const { userInfo } = useAppStore();
+  const isAuthenticated = !!userInfo;
   const pathname = useLocation();
   const [openNavigation, setOpenNavigation] = useState(false);
 
@@ -36,7 +39,7 @@ const Header = () => {
     >
       <div className="flex items-center px-5 lg:px-7.5 xl:px-10 max-lg:py-4">
         <a className="block w-[12rem] xl:mr-8" href="#hero">
-          <Logo/>
+          <Logo />
         </a>
         <nav
           className={`${
@@ -63,7 +66,8 @@ const Header = () => {
           </div>
           <HamburgerMenu />
         </nav>
-        <a
+        {isAuthenticated?(
+          <ProfileInfo/>):(<><a
           href="/auth"
           className={`button hidden mr-8 text-n-1/50 transition-colors hover:text-n-1 text-sm lg:flex ${
             pathname.hash === "#signup" ? "z-2 lg:text-n-1" : "lg:text-n-1/50"
@@ -73,7 +77,8 @@ const Header = () => {
         </a>
         <Button className="hidden text-sm lg:flex" href="/auth">
           Sign in
-        </Button>
+        </Button></>)}
+        
         <Button className={`ml-auto lg:hidden px-3`} onClick={toggleNavigation}>
           <MenuSvg openNavigation={openNavigation} />
         </Button>

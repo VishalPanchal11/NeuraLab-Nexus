@@ -34,7 +34,7 @@ const ProfileInfo = () => {
   };
 
   return (
-    <div className="absolute bottom-0 h-16 flex items-center justify-between px-2 w-full bg-[#2a2b33]">
+    <div className=" h-[84px] flex items-center justify-between px-2 md:w-[35vw] lg:w-[30vw] xl:w-[20vw]">
       <div className="flex gap-3 items-center justify-center">
         <div className="w-12 h-12 relative">
           <Avatar className="h-12 w-12  rounded-full overflow-hidden ">
@@ -50,17 +50,17 @@ const ProfileInfo = () => {
                   userInfo.color
                 )}`}
               >
-                {firstName
+                {userInfo.firstName
                   ? userInfo.firstName.split("").shift()
                   : userInfo.email.split("").shift()}
               </div>
             )}
           </Avatar>
         </div>
-        <div>
+        <div className="pr-5">
           {userInfo.firstName && userInfo.lastName
             ? `${userInfo.firstName} ${userInfo.lastName}`
-            : ""}
+            : `${userInfo.email}`}
         </div>
       </div>
       <div className="flex gap-5">
