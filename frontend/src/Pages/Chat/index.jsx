@@ -22,7 +22,7 @@ const ChatRoom = () => {
   }, [userInfo, navigate]);
 
   return (
-    <div className="pt-[4.75rem] lg:pt-[5.25rem] overflow-hidden flex h-[100vh] text-white overflow-hidden ">
+    <div className=" flex h-[100vh] text-white overflow-hidden ">
           <Header className="bg-[#2a2b33]"/>
 
       {

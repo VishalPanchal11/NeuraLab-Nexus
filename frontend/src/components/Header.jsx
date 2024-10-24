@@ -66,19 +66,26 @@ const Header = () => {
           </div>
           <HamburgerMenu />
         </nav>
-        {isAuthenticated?(
-          <ProfileInfo/>):(<><a
-          href="/auth"
-          className={`button hidden mr-8 text-n-1/50 transition-colors hover:text-n-1 text-sm lg:flex ${
-            pathname.hash === "#signup" ? "z-2 lg:text-n-1" : "lg:text-n-1/50"
-          }`}
-        >
-          New account
-        </a>
-        <Button className="hidden text-sm lg:flex" href="/auth">
-          Sign in
-        </Button></>)}
-        
+        {isAuthenticated ? (
+          <ProfileInfo />
+        ) : (
+          <>
+            <a
+              href="/auth"
+              className={`button hidden mr-8 text-n-1/50 transition-colors hover:text-n-1 text-sm lg:flex ${
+                pathname.hash === "#signup"
+                  ? "z-2 lg:text-n-1"
+                  : "lg:text-n-1/50"
+              }`}
+            >
+              New account
+            </a>
+            <Button className="hidden text-sm lg:flex" href="/auth">
+              Sign in
+            </Button>
+          </>
+        )}
+
         <Button className={`ml-auto lg:hidden px-3`} onClick={toggleNavigation}>
           <MenuSvg openNavigation={openNavigation} />
         </Button>

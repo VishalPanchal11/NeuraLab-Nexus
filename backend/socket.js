@@ -2,6 +2,14 @@ import { Server as SocketIOServer } from "socket.io";
 import Message from "./models/MessagesModel.js";
 import Channel from "./models/ChannelModel.js";
 
+const ACTIONS = {
+  JOIN: "join",
+  JOINED: "joined",
+  DISCONNECTED: "disconnected",
+  CODE_CHANGE: "code-change",
+  SYNC_CODE: "sync-code",
+};
+
 const setupSocket = (server) => {
   const io = new SocketIOServer(server, {
     cors: {
@@ -11,6 +19,7 @@ const setupSocket = (server) => {
     },
   });
   const userSocketMap = new Map();
+  const roomCodeMap = new Map();
 
   const disconnect = (socket) => {
     console.log(`Client disconnected: ${socket.id}`);
@@ -75,6 +84,13 @@ const setupSocket = (server) => {
     }
   };
 
+  const handleCodeChange = (socket, { roomId, code }) => {
+    roomCodeMap.set(roomId, code); // Store latest code for the room
+    socket.broadcast.to(roomId).emit(ACTIONS.CODE_CHANGE, { code });
+  };
+
+ 
+
   io.on("connection", (socket) => {
     const userId = socket.handshake.query.userId;
     if (userId) {
@@ -85,6 +101,38 @@ const setupSocket = (server) => {
     }
     socket.on("sendMessage", sendMessage);
     socket.on("send-channel-message", sendChannelMessage);
+    // Joining code editor room
+    socket.on(ACTIONS.JOIN, ({ roomId, username }) => {
+      console.log(`${username} is trying to join room: ${roomId}`);
+      // Add this log
+
+      userSocketMap.set(socket.id, username);
+
+      socket.join(roomId);
+
+      // Now get existing clients in the room, after setting the username
+      const clients = Array.from(
+        io.sockets.adapter.rooms.get(roomId) || []
+      ).map((socketId) => ({
+        socketId,
+        username: userSocketMap.get(socketId) || "Unknown", // Should now correctly map the username
+      }));
+
+        io.to(roomId).emit(ACTIONS.JOINED, {
+          clients,
+          username,
+          socketId: socket.id,
+        });
+      
+    });
+
+    // Code change event
+    socket.on(ACTIONS.CODE_CHANGE, (data) => handleCodeChange(socket, data));
+
+    // Sync code when a new user joins the room
+    socket.on(ACTIONS.SYNC_CODE, ({ socketId, code }) => {
+      io.to(socketId).emit(ACTIONS.CODE_CHANGE, { code });
+  });
     socket.on("disconnect", () => disconnect(socket));
   });
 };

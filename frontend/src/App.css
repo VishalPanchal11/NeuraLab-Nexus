@@ -62,15 +62,20 @@ footer a {
 }
 
 .joinBtn,
-.leaveBtn {
-    background: #4aed88;
-    width: 100px;
-    margin-left: auto;
+.leaveBtn,
+.createNewBtn {
+    background: #a855f7;
+    min-width: 100px;
+    border: 2px solid #a855f7;
+
 }
 
 .joinBtn:hover,
-.leaveBtn:hover {
-    background: #2b824c;
+.leaveBtn:hover,
+.createNewBtn:hover
+ {
+    background: #ddd;
+    color: #a855f7;
 }
 
 .createInfo {
@@ -78,14 +83,6 @@ footer a {
     margin-top: 20px;
 }
 
-.createNewBtn {
-    color: #4aed88;
-    text-decoration: none;
-    border-bottom: 1px solid #4aed88;
-    transition: all 0.3s ease-in-out;
-}
-
-.createNewBtn:hover,
 footer a:hover {
     color: #368654;
     border-color: #368654;

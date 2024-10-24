@@ -282,7 +282,7 @@ const MessageContainer = () => {
       {renderMessages()}
       <div ref={scrollRef} />
       {showImage && (
-        <div className="fixed z-1000 top-0 left-0 h-[100vh] w-[100vw] flex items-center justify-center backdrop-blur-lg flex-col">
+        <div className="pt-[4.75rem] lg:pt-[5.25rem] overflow-hidden fixed z-1000 top-0 left-0 h-[100vh] w-[100vw] flex items-center justify-center backdrop-blur-lg flex-col">
           <div>
             <img
               src={`http://localhost:6969/${imageURL}`}
@@ -290,7 +290,7 @@ const MessageContainer = () => {
               className="h-[80vh] w-full bg-cover"
             />
           </div>
-          <div className="flex gap-5 fixed top-0 mt-5">
+          <div className="flex h-full w-full items-center justify-around gap-[70vw] fixed top-0 mt-5">
             <button
               className="bg-black/20 p-3 text-2xl rounded-full hover:bg-black/50 transition-all duration-300"
               onClick={() => downloadFile(imageURL)}

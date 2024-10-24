@@ -8,6 +8,8 @@ import { useAppStore } from "./store";
 import { useEffect, useState } from "react";
 import { apiClient } from "./lib/api-client.js";
 import { GET_USER_INFO } from "./utils/constants.js";
+import CodeLab from "./Pages/CodeLab/pages/createRoom.jsx";
+import CodeEditor from "./Pages/CodeLab/pages/codeEditor.jsx";
 
 const PrivateRoute = ({ children }) => {
   const { userInfo } = useAppStore();
@@ -77,7 +79,22 @@ const App = () => {
             </PrivateRoute>
           }
         />
-        
+        <Route
+          path="/codelab"
+          element={
+            <PrivateRoute>
+              <CodeLab />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/editor/:roomId"
+          element={
+            <PrivateRoute>
+              <CodeEditor />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="/chatroom"
           element={
