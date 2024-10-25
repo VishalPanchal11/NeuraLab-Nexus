@@ -6,14 +6,20 @@ const API = axios.create({
 });
 
 export const executeCode = async (language, sourceCode) => {
-  const response = await API.post("/execute", {
-    language: language,
-    version: LANGUAGE_VERSIONS[language],
-    files: [
-      {
-        content: sourceCode,
-      },
-    ],
-  });
-  return response.data;
+  try {
+    const response = await API.post("/execute", {
+      language: language,
+      version: LANGUAGE_VERSIONS[language],
+      files: [
+        {
+          content: sourceCode,
+        },
+      ],
+    });
+    console.log(response.data);
+    return response.data; // Ensure that your output structure matches expected
+  } catch (error) {
+    console.error("Error executing code:", error);
+    throw error; // Rethrow the error to handle it in the calling function
+  }
 };
