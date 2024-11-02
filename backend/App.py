@@ -5,14 +5,17 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+# Configure CORS
+cors = CORS(app, origins='*')
 
 # Load dataset
 df = pd.read_csv('./YoutubeDataset.csv')
+print("Dataframe loaded:", df.head())
 
 # Video recommendation route
 @app.route('/recommend', methods=['POST'])
 def recommend():
+    print("Received request:", request.json)  # Log the incoming request
     data = request.get_json()
     query = data.get('query', '')
 
@@ -21,7 +24,8 @@ def recommend():
 
     # Use TF-IDF and cosine similarity to recommend videos
     tfidf = TfidfVectorizer(stop_words='english')
-    tfidf_matrix = tfidf.fit_transform(df['title'] + ' ' + df['description'])
+    # Concatenate title and description for the recommendation engine
+    tfidf_matrix = tfidf.fit_transform(df['v_title'] + ' ' + df['v_description'])
     query_vec = tfidf.transform([query])
     similarity = cosine_similarity(query_vec, tfidf_matrix).flatten()
 
@@ -29,14 +33,18 @@ def recommend():
     top_indices = similarity.argsort()[-10:][::-1]
     recommended_videos = df.iloc[top_indices]
 
-    # Prepare the response with iframe links
+    # Prepare the response with iframe links and other video info
     response = []
-    for index, row in recommended_videos.iterrows():
+    for _, row in recommended_videos.iterrows():
         response.append({
-            'v_title': row['title'],  # Ensure this key matches in the React code
-            'v_iframe': row['iframe']  # Ensure this key matches in the React code
+            'v_title': row['v_title'],
+            'v_description': row['v_description'],
+            'v_iframe': row['v_iframe'],
+            'v_date': row['publishedDate'],
+            'viewCount':row['viewCount'],
+            'likeCount':row['likeCount']  # Including published date
         })
     return jsonify(response)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=5011, debug=True)

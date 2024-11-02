@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Editor as MonacoEditor } from "@monaco-editor/react";
 
-
 const ACTIONS = {
   JOIN: "join",
   JOINED: "joined",
@@ -24,13 +23,18 @@ const Editor = ({ socketRef, roomId, language, onCodeChange, editorRef }) => {
         socketRef.current.emit(ACTIONS.CODE_CHANGE, { roomId, code });
       });
     }
+  },[editorRef.current, roomId, language]);
 
+  useEffect(() => {
     const currentSocket = socketRef.current; // Capture the current value of socketRef
 
     if (currentSocket) {
       socketRef.current.on(ACTIONS.CODE_CHANGE, ({ code }) => {
-        if (code !== null && editorRef.current.getValue() !== code) {
-          editorRef.current.setValue(code);
+        if (editorRef.current) {
+          if (code !== null && editorRef.current.getValue() !== code) {
+            console.log("recieving...", code);
+            editorRef.current.setValue(code);
+          }
         }
       });
     }
@@ -40,10 +44,9 @@ const Editor = ({ socketRef, roomId, language, onCodeChange, editorRef }) => {
         currentSocket.off(ACTIONS.CODE_CHANGE);
       }
     };
-  }, [socketRef.current, roomId, language]);
+  }, [socketRef.current, editorRef.current, roomId, language]);
 
   return (
-    
     <div style={{ height: "75vh" }}>
       <MonacoEditor
         height="100%"

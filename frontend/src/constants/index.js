@@ -240,29 +240,35 @@ export const pricing = [
 export const benefits = [
   {
     id: "0",
-    title: "Fast responding",
-    text: "Lets users quickly find answers to their questions without having to search through multiple sources.",
-    backgroundUrl: "assets/benefits/card-4.svg",
+    title: "Learning Platform",
+    text: "Provides users with access to personalized video recommendations and curated tech courses tailored to their interests and goals.",
+    backgroundUrl: "assets/benefits/card-1.svg",
     iconUrl: benefitIcon4,
     imageUrl: benefitImage2,
     light: true,
+    link:"/courses",
   },
   {
     id: "1",
-    title: "Ask anything",
-    text: "Lets users quickly find answers to their questions without having to search through multiple sources.",
-    backgroundUrl: "assets/benefits/card-5.svg",
+    title: "CodeLab",
+    text: "Enables collaborative coding sessions, allowing users to work on projects in real-time with their peers.",
+    backgroundUrl: "assets/benefits/card-2.svg",
     iconUrl: benefitIcon1,
     imageUrl: benefitImage2,
+    link:"/codelab",
+
   },
   {
     id: "2",
-    title: "Improve everyday",
-    text: "The app uses natural language processing to understand user queries and provide accurate and relevant responses.",
-    backgroundUrl: "assets/benefits/card-6.svg",
+    title: "ChatRoom",
+    text: "Facilitates instant communication within teams, supporting real-time collaboration and efficient information sharing.",
+    backgroundUrl: "assets/benefits/card-3.svg",
     iconUrl: benefitIcon2,
     imageUrl: benefitImage2,
+    link:"/chatroom",
+
   },
+  
 ];
 
 export const socials = [

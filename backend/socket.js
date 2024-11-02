@@ -89,8 +89,6 @@ const setupSocket = (server) => {
     socket.broadcast.to(roomId).emit(ACTIONS.CODE_CHANGE, { code });
   };
 
- 
-
   io.on("connection", (socket) => {
     const userId = socket.handshake.query.userId;
     if (userId) {
@@ -104,8 +102,8 @@ const setupSocket = (server) => {
     // Joining code editor room
     socket.on(ACTIONS.JOIN, ({ roomId, username }) => {
       console.log(`${username} is trying to join room: ${roomId}`);
-      // Add this log
 
+      // Add this log
       userSocketMap.set(socket.id, username);
 
       socket.join(roomId);
@@ -118,12 +116,11 @@ const setupSocket = (server) => {
         username: userSocketMap.get(socketId) || "Unknown", // Should now correctly map the username
       }));
 
-        io.to(roomId).emit(ACTIONS.JOINED, {
-          clients,
-          username,
-          socketId: socket.id,
-        });
-      
+      io.to(roomId).emit(ACTIONS.JOINED, {
+        clients,
+        username,
+        socketId: socket.id,
+      });
     });
 
     // Code change event
@@ -132,7 +129,8 @@ const setupSocket = (server) => {
     // Sync code when a new user joins the room
     socket.on(ACTIONS.SYNC_CODE, ({ socketId, code }) => {
       io.to(socketId).emit(ACTIONS.CODE_CHANGE, { code });
-  });
+    });
+
     socket.on("disconnect", () => disconnect(socket));
   });
 };

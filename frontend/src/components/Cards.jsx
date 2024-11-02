@@ -15,7 +15,7 @@ const Cards = () => {
         />
         <div className="flex flex-wrap gap-10 mb-10">
           {benefits.map((item) => (
-            <div
+            <a href={item.link}
               className="block relative p-0.5 bg-no-repeat  bg-[length:100%_100%] md:max-w-[23rem] "
               key={item.id}
             >
@@ -53,7 +53,7 @@ const Cards = () => {
                 </div>
               </div>
               <ClipPath />
-            </div>
+            </a>
           ))}
         </div>
       </div>
